@@ -30,10 +30,10 @@ namespace WebAPISample.Controllers
 
         // GET api/movie/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Movie Get(int id)
         {
        
-            var value = _context.Movies.Find(id).ToString();
+            var value = _context.Movies.Find(id);
 
             return value;
         }
@@ -42,32 +42,30 @@ namespace WebAPISample.Controllers
         [HttpPost]
         public void Post([FromBody]Movie value)
         {
-            // Create movie in db logic
-            if (ModelState.IsValid)
-            {
+               
                 _context.Movies.Add(value);
                 _context.SaveChanges();
-                Redirect("https://localhost:44325/api/movie");
-            }
-            else
-            {
                 
-            }
+    
         }
-
+        
         // PUT api/movie/5
         [HttpPut]
-        public void Put(int id, [FromBody]string value)
+        public void Put([FromBody]Movie movie)
         {
-            // Update movie in db logic
+                var newMovie = _context.Movies.Where(a => a.MovieId == movie.MovieId).SingleOrDefault();
 
+                newMovie.Title = movie.Title;
+                newMovie.Genre = movie.Genre;
+                newMovie.Director = movie.Director;
+                _context.SaveChanges();
         }
 
         // DELETE api/movie/5
         [HttpDelete]
-        public void Delete(int id)
+        public void Delete(Movie movie)
         {
-            // Delete movie from db logic
+            
         }
     }
 }
