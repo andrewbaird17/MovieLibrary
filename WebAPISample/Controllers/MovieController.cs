@@ -23,7 +23,7 @@ namespace WebAPISample.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            string[] moviesArray =  _context.Movies.Select(a => a.Title).ToArray();
+            string[] moviesArray = _context.Movies.Select(a => a.Title).ToArray();
 
             return moviesArray;
         }
@@ -32,7 +32,7 @@ namespace WebAPISample.Controllers
         [HttpGet("{id}")]
         public Movie Get(int id)
         {
-       
+
             var value = _context.Movies.Find(id);
 
             return value;
@@ -42,30 +42,31 @@ namespace WebAPISample.Controllers
         [HttpPost]
         public void Post([FromBody]Movie value)
         {
-               
-                _context.Movies.Add(value);
-                _context.SaveChanges();
-                
-    
+
+            _context.Movies.Add(value);
+            _context.SaveChanges();
+
+
         }
-        
+
         // PUT api/movie/5
         [HttpPut]
         public void Put([FromBody]Movie movie)
         {
-                var newMovie = _context.Movies.Where(a => a.MovieId == movie.MovieId).SingleOrDefault();
+            var newMovie = _context.Movies.Where(a => a.MovieId == movie.MovieId).SingleOrDefault();
 
-                newMovie.Title = movie.Title;
-                newMovie.Genre = movie.Genre;
-                newMovie.Director = movie.Director;
-                _context.SaveChanges();
+            newMovie.Title = movie.Title;
+            newMovie.Genre = movie.Genre;
+            newMovie.Director = movie.Director;
+            _context.SaveChanges();
         }
 
         // DELETE api/movie/5
         [HttpDelete]
-        public void Delete(Movie movie)
+        public void Delete([FromBody]Movie movie)
         {
-            
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
         }
     }
 }
