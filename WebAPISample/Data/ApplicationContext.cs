@@ -47,9 +47,7 @@ namespace WebAPISample.Data
                   Title = "Die Hard",
                   Genre = "Action",
                   Director = "John McTiernan"
-              }
-
-              );
+              });
         }
 
         public DbSet<Movie> Movies { get; set; }
