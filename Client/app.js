@@ -23,5 +23,31 @@
         e.preventDefault();
     }
 
+    function showMovies(){
+        $.ajax({
+            url: 'https://localhost:44325/api/movie',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            success: function (data) {
+                $("#DIV").html('');
+                var DIV = '';
+                $.each(data, function(i, item){
+                    var rows = "<tr>" +
+                    "<td id = 'Title'>" + item + "</td>" +
+                    "</tr";
+                $("#Table").append(rows);
+                });
+                console.log(data);
+            },
+            failure: function(data){
+                alert(data.responseText);
+            },
+            error: function(data) {
+                alert(data.responseText);
+            }
+        });
+    };
+    showMovies();
     $('#my-form').submit( processForm );
 })(jQuery);
