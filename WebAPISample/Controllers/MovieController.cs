@@ -43,6 +43,16 @@ namespace WebAPISample.Controllers
         public void Post([FromBody]Movie value)
         {
             // Create movie in db logic
+            if (ModelState.IsValid)
+            {
+                _context.Movies.Add(value);
+                _context.SaveChanges();
+                Redirect("https://localhost:44325/api/movie");
+            }
+            else
+            {
+                
+            }
         }
 
         // PUT api/movie/5
@@ -50,6 +60,7 @@ namespace WebAPISample.Controllers
         public void Put(int id, [FromBody]string value)
         {
             // Update movie in db logic
+
         }
 
         // DELETE api/movie/5
