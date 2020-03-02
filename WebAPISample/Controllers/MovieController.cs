@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPISample.Data;
 using WebAPISample.Models;
 
+
 namespace WebAPISample.Controllers
 {
     [Route("api/[controller]")]
@@ -22,8 +23,9 @@ namespace WebAPISample.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            // Retrieve all movies from db logic
-            return new string[] { "movie1 string", "movie2 string" };
+            string[] moviesArray =  _context.Movies.Select(a => a.Title).ToArray();
+
+            return moviesArray;
         }
 
         // GET api/movie/5
@@ -31,6 +33,8 @@ namespace WebAPISample.Controllers
         public string Get(int id)
         {
             // Retrieve movie by id from db logic
+            _context.Movies.Find(id).ToString();
+
             return "value";
         }
 
