@@ -32,10 +32,10 @@ namespace WebAPISample.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            // Retrieve movie by id from db logic
-            _context.Movies.Find(id).ToString();
+       
+            var value = _context.Movies.Find(id).ToString();
 
-            return "value";
+            return value;
         }
 
         // POST api/movie
