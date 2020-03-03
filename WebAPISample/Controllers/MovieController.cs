@@ -24,7 +24,6 @@ namespace WebAPISample.Controllers
         public IEnumerable<string> Get()
         {
             string[] moviesArray = _context.Movies.Select(a => a.Title).ToArray();
-
             return moviesArray;
         }
 
@@ -32,21 +31,17 @@ namespace WebAPISample.Controllers
         [HttpGet("{id}")]
         public Movie Get(int id)
         {
-
             var value = _context.Movies.Find(id);
-
             return value;
         }
 
         // POST api/movie
         [HttpPost]
-        public void Post([FromBody]Movie value)
+        public IActionResult Post([FromBody]Movie value)
         {
-
             _context.Movies.Add(value);
             _context.SaveChanges();
-
-
+            return Ok(value);
         }
 
         // PUT api/movie/5
