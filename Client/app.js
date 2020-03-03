@@ -15,10 +15,6 @@
             success: function(data){
                 $('#response').html(data);
                 alert("Successfully Added To Library!");
-                var row = "<tr>" +
-                "<td id = 'Title'>" + data.title + "</td>" +
-                "</tr>";
-                $('#Table').append(row);
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -56,7 +52,7 @@
             type: 'get',
             contentType: 'application/json',
             success: function (data) {
-                $("#DIV").html('');
+                $("#Table").html('');
                 var DIV = '';
                 $.each(data, function(i){
                     var rows = "<tr>" +
@@ -75,7 +71,7 @@
         });
     };
 
-    showMovies();
-    //$('#ShowTable').submit(showMovies);
+    //showMovies();
+    $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );
 })(jQuery);
