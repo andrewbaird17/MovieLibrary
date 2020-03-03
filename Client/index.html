@@ -18,6 +18,14 @@
     <button type="submit">Submit</button>
 </form>
 <br>
+<form id="edit-form">
+    <h4>Edit Movie Details</h4>
+    <input type="text" name="title" placeholder="Title" />
+    <input type="text" name="director" placeholder="Director" />
+    <input type="text" name="genre" placeholder="Genre" />
+    <button type="submit">Submit</button>
+</form>
+<br>
 <br>
 <button type="button" id= "ShowTable">Show Movie Titles</button>
 <br>
@@ -25,6 +33,14 @@
     <div class="panel-heading"><strong>MovieTitles</strong></div>
     <div class = "panel-body">
         <table class = "table table-bordered" id="Table">
+            <th>
+                <tr>
+                    <td>Title</td>
+                    <td>Director</td>
+                    <td>Genre</td>
+                </tr>
+                <tr id="row"></tr>
+            </th>
         </table>
     </div>
 </div>
