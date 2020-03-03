@@ -24,19 +24,19 @@
         e.preventDefault();
     }
 
-    function seeDetails(e){
+    function updateDetails(e){
         // get movieId from a movie I want to see details for
         var movie = {
-            MovieId: this.value
+            
         }
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
-            type: 'get',
+            type: 'put',
             contentType: 'application/json', 
             data: JSON.stringify(movie),
             success: function(data){
-
+                alert("Successfully Updated!")
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -52,13 +52,14 @@
             type: 'get',
             contentType: 'application/json',
             success: function (data) {
-                $("#Table").html('');
-                var DIV = '';
+                $("#row").empty();
                 $.each(data, function(i){
                     var rows = "<tr>" +
-                    "<td id = 'Title'>" + data[i].title + "</td>" +
+                    "<td>" + data[i].title + "</td>" +
+                    "<td>" + data[i].director + "</td>" +
+                    "<td>" + data[i].genre + "</td>" +
                     "</tr>";
-                $("#Table").append(rows);
+                $("#row").append(rows);
                 });
                 console.log(data);
             },
@@ -71,7 +72,7 @@
         });
     };
 
-    //showMovies();
     $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );
+    //$('#edit-form').submit(updateDetails);
 })(jQuery);
