@@ -30,21 +30,18 @@
 <br>
 <button type="button" id= "ShowTable">Show Movie Titles</button>
 <br>
-<div class = "panel panel-primary">
-    <div class="panel-heading"><strong>MovieTitles</strong></div>
-    <div class = "panel-body">
-        <table class = "table table-bordered" id="Table">
-            <th>
-                <tr>
-                    <td>Title</td>
-                    <td>Director</td>
-                    <td>Genre</td>
-                </tr>
-                <tr id="row"></tr>
-            </th>
-        </table>
-    </div>
-</div>
+<table class = "table table-bordered" id = "Table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Director</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="row"></tr>
+    </tbody>
+</table>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./app.js"></script>
