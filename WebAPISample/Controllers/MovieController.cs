@@ -65,7 +65,7 @@ namespace WebAPISample.Controllers
         [HttpDelete]
         public void Delete([FromBody]Movie movie)
         {
-            _context.Movies.Add(movie);
+            _context.Movies.Remove(movie);
             _context.SaveChanges();
         }
     }
