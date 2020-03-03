@@ -8,13 +8,17 @@
 
         $.ajax({
             url: 'https://localhost:44325/api/movie',
-            dataType: 'text',
+            dataType: 'json',
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify(dict),
             success: function(data){
                 $('#response').html(data);
-                alert("Successfully Added" + data.title + " To Library")
+                alert("Successfully Added To Library!");
+                var row = "<tr>" +
+                "<td id = 'Title'>" + data.title + "</td>" +
+                "</tr>";
+                $('#Table').append(row);
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -54,9 +58,9 @@
             success: function (data) {
                 $("#DIV").html('');
                 var DIV = '';
-                $.each(data, function(i, item){
+                $.each(data, function(i){
                     var rows = "<tr>" +
-                    "<td id = 'Title'>" + item + "</td>" +
+                    "<td id = 'Title'>" + data[i].title + "</td>" +
                     "</tr>";
                 $("#Table").append(rows);
                 });
@@ -72,6 +76,6 @@
     };
 
     showMovies();
-    //$('#showTable').click(showMovies);
+    //$('#ShowTable').submit(showMovies);
     $('#my-form').submit( processForm );
 })(jQuery);

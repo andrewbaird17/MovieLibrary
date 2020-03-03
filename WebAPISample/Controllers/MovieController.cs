@@ -21,9 +21,9 @@ namespace WebAPISample.Controllers
         }
         // GET api/movie
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Movie> Get()
         {
-            string[] moviesArray = _context.Movies.Select(a => a.Title).ToArray();
+            var moviesArray = _context.Movies.ToArray();
             return moviesArray;
         }
 
