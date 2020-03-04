@@ -53,11 +53,12 @@
             contentType: 'application/json',
             success: function (data) {
                 $("#row").empty();
-                $.each(data, function(i){
+                $.each(data, function(i,item){
                     var rows = "<tr>" +
-                    "<td>" + data[i].title + "</td>" +
-                    "<td>" + data[i].director + "</td>" +
-                    "<td>" + data[i].genre + "</td>" +
+                    "<td>" + item['title'] + "</td>" +
+                    "<td>" + item['director'] + "</td>" +
+                    "<td>" + item['genre'] + "</td>" +
+                    "<td>" + "<button id='edit' data-id=" + item['movieId'] + "> Edit</button>"+"</td>"+
                     "</tr>";
                 $("#row").append(rows);
                 });
@@ -73,6 +74,6 @@
     };
 
     $('#ShowTable').click(showMovies);
-    $('#my-form').submit( processForm );
+    $('#my-form').submit( processForm );    
     //$('#edit-form').submit(updateDetails);
 })(jQuery);
