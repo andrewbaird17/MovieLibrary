@@ -43,26 +43,6 @@
         });
     }
 
-    function getMovieDetails(id){
-        $.ajax({
-            url: 'https://localhost:44325/api/movie/' + id,
-            dataType: 'json',
-            type: 'get', 
-            //data: id,
-            success: function(data){
-                console.log(data);
-                $("#edit-form input[name='movieId']").val(data['movieId']);
-                $("#edit-form input[name='title']").val(data['title']);
-                $("#edit-form input[name='director']").val(data['director']);
-                $("#edit-form input[name='genre']").val(data['genre']);
-                
-            },
-            error: function(errorThrown){
-                console.log(errorThrown);
-            }
-        });
-    }
-
     function updateDetails(e){
         // get movieId from a movie I want to see details for
         var movie = {
@@ -89,6 +69,7 @@
     }
 
     function showMovies(){
+        var x = null;
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
@@ -101,10 +82,11 @@
                     "<td>" + item['title'] + "</td>" +
                     "<td>" + item['director'] + "</td>" +
                     "<td>" + item['genre'] + "</td>" +
-                    "<td>" + "<button type= 'button' id='editMovie' onclick=" + getMovieDetails(item['movieId']) + "> Edit</button>" + "</td>"+
+                    "<td>" + "<button onclick=getMovieDetails("+item['movieId']+") id='editMovie' value='Edit'> Edit</button>" + "</td>"+
                     "</tr>";
                 $("#row").append(rows);
                 });
+                
                 console.log(data);
             },
             failure: function(data){
@@ -115,9 +97,28 @@
             }
         });
     };
-
     $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );    
     $('#edit-form').submit(updateDetails);
-    //$('#editMovie').click(getMovieDetails);
+
 })(jQuery);
+
+function getMovieDetails(id){
+    $.ajax({
+        url: 'https://localhost:44325/api/movie/' + id,
+        dataType: 'json',
+        type: 'get', 
+        //data: id,
+        success: function(data){
+            console.log(data);
+            $("#edit-form input[name='movieId']").val(data['movieId']);
+            $("#edit-form input[name='title']").val(data['title']);
+            $("#edit-form input[name='director']").val(data['director']);
+            $("#edit-form input[name='genre']").val(data['genre']);
+            
+        },
+        error: function(errorThrown){
+            console.log(errorThrown);
+        }
+    });
+}
