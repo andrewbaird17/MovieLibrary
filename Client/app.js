@@ -13,9 +13,9 @@
             contentType: 'application/json',
             data: JSON.stringify(dict),
             success: function(data){
-                $('#response').html(data);
                 $("#my-form input[type='text']").val('');
                 alert("Successfully Added To Library!");
+                showMovies();
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -24,27 +24,8 @@
 
         e.preventDefault();
     }
-    
-    function deleteMovie(item){
-        var movie = item;
-        $.ajax({
-            url: 'https://localhost:44325/api/movie',
-            dataType: 'json',
-            type: 'delete',
-            contentType: 'application/json', 
-            data: JSON.stringify(movie),
-            success: function(data){
-                alert("Deleted Movie from Library")
-                console.log(data);
-            },
-            error: function(errorThrown){
-                console.log(errorThrown);
-            }
-        });
-    }
 
     function updateDetails(e){
-        // get movieId from a movie I want to see details for
         var movie = {
             movieId: parseInt(this["movieId"].value),
             Title: this["title"].value,
@@ -60,6 +41,7 @@
             success: function(data){
                 alert("Successfully Updated!");
                 $("#edit-form input[type='text']").val('');
+                showMovies();
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -68,35 +50,6 @@
         e.preventDefault();
     }
 
-    function showMovies(){
-        var x = null;
-        $.ajax({
-            url: 'https://localhost:44325/api/movie',
-            dataType: 'json',
-            type: 'get',
-            contentType: 'application/json',
-            success: function (data) {
-                $("#row").empty();
-                $.each(data, function(i,item){
-                    var rows = "<tr>" +
-                    "<td>" + item['title'] + "</td>" +
-                    "<td>" + item['director'] + "</td>" +
-                    "<td>" + item['genre'] + "</td>" +
-                    "<td>" + "<button onclick=getMovieDetails("+item['movieId']+") id='editMovie' value='Edit'> Edit</button>" + "</td>"+
-                    "</tr>";
-                $("#row").append(rows);
-                });
-                
-                console.log(data);
-            },
-            failure: function(data){
-                alert(data.responseText);
-            },
-            error: function(data) {
-                alert(data.responseText);
-            }
-        });
-    };
     $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );    
     $('#edit-form').submit(updateDetails);
@@ -122,3 +75,51 @@ function getMovieDetails(id){
         }
     });
 }
+
+function deleteMovie(id){
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'text',
+        type: 'delete',
+        contentType: 'application/json', 
+        data: JSON.stringify(id),
+        success: function(data){
+            alert("Deleted Movie from Library")
+            showMovies();
+        },
+        error: function(errorThrown){
+            console.log(errorThrown);
+        }
+    });
+}
+
+function showMovies(){
+    var x = null;
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function (data) {
+            $("#row").empty();
+            $.each(data, function(i,item){
+                var rows = "<tr>" +
+                "<td>" + item['title'] + "</td>" +
+                "<td>" + item['director'] + "</td>" +
+                "<td>" + item['genre'] + "</td>" +
+                "<td>" + "<button onclick=getMovieDetails("+item['movieId']+") id='editMovie' value='Edit'> Edit</button>" + "</td>"+
+                "<td>" + "<button onclick=deleteMovie("+item['movieId']+") id='deleteMovie' value='Edit'> Delete</button>" + "</td>"+
+                "</tr>";
+            $("#row").append(rows);
+            });
+            
+            console.log(data);
+        },
+        failure: function(data){
+            alert(data.responseText);
+        },
+        error: function(data) {
+            alert(data.responseText);
+        }
+    });
+};
