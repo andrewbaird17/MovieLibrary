@@ -46,7 +46,7 @@ namespace WebAPISample.Controllers
 
         // PUT api/movie/5
         [HttpPut]
-        public void Put([FromBody]Movie movie)
+        public IActionResult Put([FromBody]Movie movie)
         {
             var newMovie = _context.Movies.Where(a => a.MovieId == movie.MovieId).SingleOrDefault();
 
@@ -54,14 +54,16 @@ namespace WebAPISample.Controllers
             newMovie.Genre = movie.Genre;
             newMovie.Director = movie.Director;
             _context.SaveChanges();
+            return Ok(newMovie);
         }
 
         // DELETE api/movie/5
         [HttpDelete]
-        public void Delete([FromBody]Movie movie)
+        public IActionResult Delete([FromBody]Movie movie)
         {
             _context.Movies.Remove(movie);
             _context.SaveChanges();
+            return Ok();
         }
     }
 }

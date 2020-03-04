@@ -24,39 +24,62 @@
 
         e.preventDefault();
     }
-
-    function getMovieDetails(){
-        var id = item['movieId'];
+    
+    function deleteMovie(item){
+        var movie = item;
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
-            type: 'get',
+            type: 'delete',
             contentType: 'application/json', 
-            data: id,
+            data: JSON.stringify(movie),
             success: function(data){
-                $('#edit-form').html(data);
+                alert("Deleted Movie from Library")
                 console.log(data);
             },
             error: function(errorThrown){
                 console.log(errorThrown);
             }
         });
-        e.preventDefault();
+    }
+
+    function getMovieDetails(id){
+        $.ajax({
+            url: 'https://localhost:44325/api/movie/' + id,
+            dataType: 'json',
+            type: 'get', 
+            //data: id,
+            success: function(data){
+                console.log(data);
+                $("#edit-form input[name='movieId']").val(data['movieId']);
+                $("#edit-form input[name='title']").val(data['title']);
+                $("#edit-form input[name='director']").val(data['director']);
+                $("#edit-form input[name='genre']").val(data['genre']);
+                
+            },
+            error: function(errorThrown){
+                console.log(errorThrown);
+            }
+        });
     }
 
     function updateDetails(e){
         // get movieId from a movie I want to see details for
         var movie = {
-            
+            movieId: parseInt(this["movieId"].value),
+            Title: this["title"].value,
+            Genre: this["genre"].value,
+            Director: this["director"].value,
         }
         $.ajax({
             url: 'https://localhost:44325/api/movie',
-            dataType: 'json',
+            dataType: 'text',
             type: 'put',
             contentType: 'application/json', 
             data: JSON.stringify(movie),
             success: function(data){
-                alert("Successfully Updated!")
+                alert("Successfully Updated!");
+                $("#edit-form input[type='text']").val('');
             },
             error: function(errorThrown){
                 console.log(errorThrown);
@@ -78,7 +101,7 @@
                     "<td>" + item['title'] + "</td>" +
                     "<td>" + item['director'] + "</td>" +
                     "<td>" + item['genre'] + "</td>" +
-                    "<td>" + "<button id='edit' data-id=" + item['movieId'] + "> Edit</button>"+"</td>"+
+                    "<td>" + "<button type= 'button' id='editMovie' onclick=" + getMovieDetails(item['movieId']) + "> Edit</button>" + "</td>"+
                     "</tr>";
                 $("#row").append(rows);
                 });
@@ -95,6 +118,6 @@
 
     $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );    
-    //$('#edit-form').submit(updateDetails);
-    $('#edit').click(getMovieDetails);
+    $('#edit-form').submit(updateDetails);
+    //$('#editMovie').click(getMovieDetails);
 })(jQuery);
