@@ -14,6 +14,7 @@
             data: JSON.stringify(dict),
             success: function(data){
                 $('#response').html(data);
+                $("#my-form input[type='text']").val('');
                 alert("Successfully Added To Library!");
             },
             error: function(errorThrown){
