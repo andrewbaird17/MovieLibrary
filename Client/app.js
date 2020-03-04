@@ -24,6 +24,25 @@
         e.preventDefault();
     }
 
+    function getMovieDetails(){
+        var id = item['movieId'];
+        $.ajax({
+            url: 'https://localhost:44325/api/movie',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json', 
+            data: id,
+            success: function(data){
+                $('#edit-form').html(data);
+                console.log(data);
+            },
+            error: function(errorThrown){
+                console.log(errorThrown);
+            }
+        });
+        e.preventDefault();
+    }
+
     function updateDetails(e){
         // get movieId from a movie I want to see details for
         var movie = {
@@ -76,4 +95,5 @@
     $('#ShowTable').click(showMovies);
     $('#my-form').submit( processForm );    
     //$('#edit-form').submit(updateDetails);
+    $('#edit').click(getMovieDetails);
 })(jQuery);
