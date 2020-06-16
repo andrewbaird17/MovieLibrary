@@ -138,11 +138,22 @@ function showMovies() {
 }
 
 function searchTable() {
-	var input;
-	$('#searchInput').on('keyup', function () {
-		input = $(this).val().toLowerCase();
-		$('#Table tr').filter(function () {
-			$(this).toggle($(this).text().indexOf(input) > -1);
-		});
+	var $rows = $('#Table tbody tr');
+	$('#searchInput').keyup(function () {
+		var val = $.trim($(this).val())
+			.replace(/ +/g, ' ')
+			.toLowerCase()
+			.split(' ');
+		$rows
+			.hide()
+			.filter(function () {
+				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+				var matchesSearch = true;
+				$(val).each(function (index, value) {
+					matchesSearch = !matchesSearch ? false : ~text.indexOf(value);
+				});
+				return matchesSearch;
+			})
+			.show();
 	});
 }
